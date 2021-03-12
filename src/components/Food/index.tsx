@@ -17,16 +17,19 @@ interface IProps {
   food: IFoodPlate;
   handleDelete: (id: number) => {};
   handleEditFood: (food: IFoodPlate) => void;
+  handleAvailability: (id: number, available: boolean) => void;
 }
 
 const Food: React.FC<IProps> = ({
   food,
   handleDelete,
   handleEditFood,
+  handleAvailability,
 }: IProps) => {
   const [isAvailable, setIsAvailable] = useState(food.available);
 
   async function toggleAvailable(): Promise<void> {
+    handleAvailability(food.id, !isAvailable);
     setIsAvailable(!isAvailable);
   }
 
@@ -37,9 +40,10 @@ const Food: React.FC<IProps> = ({
 
   return (
     <Container available={isAvailable}>
+      { food.image && 
       <header>
         <img src={food.image} alt={food.name} />
-      </header>
+      </header>}
       <section className="body">
         <h2>{food.name}</h2>
         <p>{food.description}</p>
