@@ -1,35 +1,75 @@
 import React from 'react';
-
-import { FiPlusSquare } from 'react-icons/fi';
+import { Link, useHistory } from "react-router-dom";
+import { FiPlusSquare, FiChevronRight, FiChevronLeft } from 'react-icons/fi';
 import { Container } from './styles';
 
 import Logo from '../../assets/logo.svg';
 
 interface IHeaderProps {
-  openModal: () => void;
+  openModal?: () => void;
+  isAbout?: boolean
 }
 
-const Header: React.FC<IHeaderProps> = ({ openModal }) => (
-  <Container>
+const Header: React.FC<IHeaderProps> = ({ openModal, isAbout }) => {
+  const history = useHistory();
+
+  return (<Container>
     <header>
       <img src={Logo} alt="GoRestaurant" />
-      <nav>
-        <div>
+      {
+        openModal &&
+        <nav>
+          <div>
+            <button
+              type="button"
+              onClick={() => {
+                openModal();
+              }}
+            >
+              <div className="text">Novo Prato</div>
+              <div className="icon">
+                <FiPlusSquare size={24} />
+              </div>
+            </button>
+          </div>
+          <div>
           <button
-            type="button"
-            onClick={() => {
-              openModal();
-            }}
+              type="button"
+              onClick={() => {
+                history.push("/about");
+              }}
+            >
+              <div className="text">Sobre</div>
+              <div className="icon">
+                <FiChevronRight size={24} />
+              </div>
+            </button>
+          </div>
+        </nav>
+      }
+      {isAbout && 
+      <nav className="goBack">
+          <div>
+          <button
+          type="button"
+          onClick={() => {
+             history.goBack();  
+          }}
           >
-            <div className="text">Novo Prato</div>
             <div className="icon">
-              <FiPlusSquare size={24} />
-            </div>
+                <FiChevronLeft size={24} />
+              </div>
+            <div className="text">Voltar</div>
           </button>
         </div>
       </nav>
+      }
+
     </header>
   </Container>
-);
-
+  )
+};
+Header.defaultProps = {
+  isAbout:false
+}
 export default Header;

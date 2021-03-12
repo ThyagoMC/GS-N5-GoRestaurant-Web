@@ -13,7 +13,12 @@ export const Container = styled.div`
     justify-content: space-between;
 
     nav {
+      display: flex;
+      alignItens: center;
+      
+
       div {
+        margin: 0 5px;
         button {
           font-weight: 600;
           border-radius: 8px;
@@ -37,6 +42,15 @@ export const Container = styled.div`
             margin: 0 auto;
           }
         }
+      }
+    }
+
+    nav.goBack {
+      .icon{
+            padding: 16px 16px;
+            background: #41c900;
+            border-radius: 8px 0 0 8px;
+            margin: 0 auto;
       }
     }
   }
