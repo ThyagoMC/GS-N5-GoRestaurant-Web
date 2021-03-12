@@ -12,6 +12,10 @@ export const Container = styled.div`
     align-items: center;
     justify-content: space-between;
 
+    a {
+      text-decoration: none;
+    }
+
     nav {
       display: flex;
       alignItens: center;

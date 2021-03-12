@@ -33,17 +33,16 @@ const Header: React.FC<IHeaderProps> = ({ openModal, isAbout }) => {
             </button>
           </div>
           <div>
-          <button
-              type="button"
-              onClick={() => {
-                history.push("/about");
-              }}
-            >
-              <div className="text">Sobre</div>
+          <Link to="/about">
+            <button>
+              <div className="text">
+                Sobre
+              </div>
               <div className="icon">
                 <FiChevronRight size={24} />
               </div>
-            </button>
+              </button>
+            </Link>
           </div>
         </nav>
       }
