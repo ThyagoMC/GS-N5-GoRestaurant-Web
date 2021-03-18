@@ -9,6 +9,7 @@ import ModalAddFood from '../../components/ModalAddFood';
 import ModalEditFood from '../../components/ModalEditFood';
 
 import { FoodsContainer } from './styles';
+import { useToast } from '../../hooks/toast';
 
 interface IFoodPlate {
   id: number;
@@ -24,6 +25,7 @@ const Dashboard: React.FC = () => {
   const [editingFood, setEditingFood] = useState<IFoodPlate>({} as IFoodPlate);
   const [modalOpen, setModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
+  const { addToast } = useToast();
 
   useEffect(() => {
     async function loadFoods(): Promise<void> {
@@ -44,6 +46,11 @@ const Dashboard: React.FC = () => {
     try {
       const result = await api.post('foods', { ...food, available: true });
       setFoods([...foods, result.data]);
+      addToast({
+        type: 'success',
+        title: 'Prato salvo!',
+        description: 'Prato foi salvo com sucesso!',
+      });
     } catch (err) {
       console.log(err);
     }
@@ -58,17 +65,26 @@ const Dashboard: React.FC = () => {
       ...food,
     });
 
-    console.log(result.data);
     const foodIndex = foods.findIndex(f => f.id === editingFood.id);
     const updatedFoods = [...foods];
     updatedFoods[foodIndex] = result.data;
     setFoods(updatedFoods);
+    addToast({
+      type: 'success',
+      title: 'Prato atualizado!',
+      description: 'Prato foi atualizado com sucesso!',
+    });
   }
 
   async function handleDeleteFood(id: number): Promise<void> {
     await api.delete(`foods/${id}`);
     const filteredFoods = foods.filter(f => f.id !== id);
     setFoods(filteredFoods);
+    addToast({
+      type: 'success',
+      title: 'Prato excluído!',
+      description: 'Prato foi excluído com sucesso!',
+    });
   }
 
   function toggleModal(): void {
